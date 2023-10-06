@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/static/css/main.min.css">
-    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
-    {{ template "_header" }}
-</head>
-<body class="text-center text-green-400">
-    Hi, this is the base template.
-    {{ if . }}
-        <h1 class="bold text-3xl">Hello, {{ . }}</h1>
-    {{ end }}
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/static/css/main.min.css">
+        <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon">
+        <title>
+            {{ template "title" }}
+            {{ define "title" }}{{ end }} | Go To-Do App
+        </title> 
+    </head>
+    <body class="text-center text-red-600 text-5xl">
+        <header>
+            this is the header
+        </header>
+
+        {{ template "content" . }}
+        {{ define "content" }}{{ end }}
+        
+        <footer>
+            this is the footer
+        </footer>
+    </body>
 </html>
