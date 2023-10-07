@@ -22,6 +22,8 @@ func Register(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		log.Println(r.FormValue("password"))
 
 		w = AddNotification(w, r, "Registration successful", "success")
+		w = AddNotification(w, r, "Registration in progress...", "warning")
+		w = AddNotification(w, r, "Registration failed", "danger")
 	}
 	err = template.ExecuteTemplate(w, "base.html", nil)
 	if err != nil {
