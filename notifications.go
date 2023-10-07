@@ -7,30 +7,8 @@ import (
 	"strings"
 )
 
-type responseWriter struct {
-	http.ResponseWriter
-	statusCode int
-}
-
-func (w *responseWriter) WriteHeader(statusCode int) {
-	w.statusCode = statusCode
-	w.ResponseWriter.WriteHeader(statusCode)
-}
-
-func (w *responseWriter) Write(b []byte) (int, error) {
-	if w.statusCode == 0 {
-		w.statusCode = http.StatusOK
-	}
-	return w.ResponseWriter.Write(b)
-}
-
-func AddNotification(w http.ResponseWriter, r *http.Request, notificationMessage, notificationType string) http.ResponseWriter {
-	// create a new ResponseWriter that wraps the existing one
-	newWritter := &responseWriter{
-		ResponseWriter: w,
-		statusCode:     http.StatusOK,
-	}
-
+func AddNotification(w http.ResponseWriter, r *http.Request, notificationMessage, notificationType string) {
+	// create map for hx-trigger header value
 	hxTriggerVal := make(map[string]interface{})
 
 	// get current header value
@@ -40,7 +18,7 @@ func AddNotification(w http.ResponseWriter, r *http.Request, notificationMessage
 		// convert current header value to map
 		err := json.Unmarshal([]byte(currentHxTriggerVal), &hxTriggerVal)
 		if err != nil {
-			log.Printf("Error unmarshalling hx-trigger header: %s", err)
+			log.Printf("Error unmarshalling hx-trigger header: %s, header value: %s", err, currentHxTriggerVal)
 		}
 	} else if currentHxTriggerVal != "" {
 		// convert current header value to map
@@ -66,11 +44,10 @@ func AddNotification(w http.ResponseWriter, r *http.Request, notificationMessage
 	// convert hxTriggerVal to json
 	hxTriggerValJson, err := json.Marshal(hxTriggerVal)
 	if err != nil {
-		log.Printf("Error marshalling hx-trigger header: %s", err)
+		log.Printf("Error marshalling HxTriggerVal: %s, value: %s", err, hxTriggerVal)
 	}
 
-	// add hxTriggerVal as header value
-	newWritter.Header().Set("Hx-Trigger", string(hxTriggerValJson))
+	// add hxTriggerValJson as header value
+	w.Header().Set("Hx-Trigger", string(hxTriggerValJson))
 	log.Printf("New Notification added: type: %s", notificationType)
-	return newWritter
 }
