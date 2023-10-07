@@ -8,17 +8,25 @@
         <title>
             {{ template "title" }}
             {{ define "title" }}{{ end }} | Go To-Do App
-        </title> 
+        </title>
+        <script src="/static/js/htmx.min.js"></script>
     </head>
-    <body class="text-center text-red-600 text-5xl">
-        <header>
-            this is the header
+    <body>
+        <header class="bg-gray-400">
+            <nav>
+                <ul class="flex justify-center space-x-4 text-red-500 font-bold">
+                    <li><a href="/">Todos</a></li>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/register">Register</a></li>
+                </ul>
+            </nav>
         </header>
+        <main class="bg-gray-300 min-h-[80vh] p-5">
+            {{ template "content" . }}
+            {{ define "content" }}{{ end }}
 
-        {{ template "content" . }}
-        {{ define "content" }}{{ end }}
-        
-        <footer>
+        </main>
+        <footer class="bg-gray-400">
             this is the footer
         </footer>
     </body>

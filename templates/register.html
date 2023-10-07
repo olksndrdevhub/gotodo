@@ -1,0 +1,32 @@
+{{ define "title" }}Registration{{ end }}
+
+{{ define "content" }}
+<div id="registrationForm" class="bg-green-200 p-5 w-11/12 md:w-6/12 mx-auto">
+    <form class="bg-green-400 space-y-5"
+        hx-post="/register"
+        hx-select="#registrationForm"
+        hx-target="#registrationForm"
+        hx-swap="outerHTML">
+        <div class="flex flex-col space-y-1">
+            <label for="first_name">First name</label>
+            <input type="text" id="first_name" name="first_name" placeholder="First name" required>
+        </div>
+        <div class="flex flex-col space-y-1">
+            <label for="last_name">Last name</label>
+            <input type="text" id="last_name" name="last_name" placeholder="Last name" required>
+        </div>
+        <div class="flex flex-col space-y-1">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+        </div>
+        <div class="flex flex-col space-y-1">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+        </div>
+        <button type="submit" class="px-3 py-2 bg-red-400 rounded-lg">Register</button>
+    </form>
+    <span>
+        Already have an account? <a href="/login" class="text-red-500 font-bold">Login</a>
+    </span>
+</div>
+{{ end }}
